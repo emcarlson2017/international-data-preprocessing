@@ -2,7 +2,7 @@
 
 An overview of all functionality included in the International Data Preprocessing Python package. 
 
-### Standard Input 
+## Standard Input 
 
 Review the documentation below to ensure the input data frame matches the requirements for each function. 
 
@@ -10,11 +10,11 @@ Review the documentation below to ensure the input data frame matches the requir
 
 ## Inflation Adjustments: XXXXX
 
-###Description: 
+### Description: 
 
 This function adjusts currency values for inflation so values are reflective of monetary value for a given year. 
 
-###Arguments
+### Arguments
 
 * col_name: Name of the column the inflation adjustment will be excuted on
 * year_adjusted: The year to which currency values will be adjusted to 
@@ -27,7 +27,7 @@ code blocks for commands
 
 ## Per Capita Calculations: XXXX
 
-#### Description: 
+### Description: 
 
 This function adjusts numeric values to per-capita values based on an associated country name.  
 
@@ -44,7 +44,7 @@ code blocks for commands
 
 ## International Currency Exchange: XXXX 
 
-#### Description: 
+### Description: 
 
 This function calculates the exchange value of currency for a given country of origin and given country for calculation. 
 
