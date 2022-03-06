@@ -30,9 +30,11 @@ For questions or concerns, reference the contact information below, or further e
 ## Authors
 
 Shriraj Gandhi
+
 Contact: ssgandhi@uw.edu
 
 Emma Carlson 
+
 Contact: emcar98@uw.edu
 
 ## Version History
