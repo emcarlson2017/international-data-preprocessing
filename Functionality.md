@@ -6,15 +6,15 @@ An overview of all functionality included in the International Data Preprocessin
 
 Review the documentation below to ensure the input data frame matches the requirements for each function. 
 
-## Package Functions
+# Package Functions
 
-### Inflation Adjustments: XXXXX
+## Inflation Adjustments: XXXXX
 
-#####Description: 
+###Description: 
 
 This function adjusts currency values for inflation so values are reflective of monetary value for a given year. 
 
-#####Arguments
+###Arguments
 
 * col_name: Name of the column the inflation adjustment will be excuted on
 * year_adjusted: The year to which currency values will be adjusted to 
@@ -25,13 +25,13 @@ This function adjusts currency values for inflation so values are reflective of 
 code blocks for commands
 ```
 
-### Per Capita Calculations: XXXX
+## Per Capita Calculations: XXXX
 
-#####Description: 
+#### Description: 
 
 This function adjusts numeric values to per-capita values based on an associated country name.  
 
-####Arguments
+### Arguments
 
 * col_name: Name of the column the per capita calculation will be executed on 
 * country_col_name: Name of column providing country names in data frame 
@@ -42,13 +42,13 @@ This function adjusts numeric values to per-capita values based on an associated
 code blocks for commands
 ```
 
-### International Currency Exchange: XXXX 
+## International Currency Exchange: XXXX 
 
-#####Description: 
+#### Description: 
 
 This function calculates the exchange value of currency for a given country of origin and given country for calculation. 
 
-####Arguments
+### Arguments
 
 * col_name: Name of the column the per capita calculation will be executed on 
 * countries: Single value or list of values that determine the exchange calculation 
