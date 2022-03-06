@@ -10,7 +10,7 @@ Review the documentation below to ensure the input data frame matches the requir
 
 ## Inflation Adjustments: XXXXX
 
-### Description: 
+### Description
 
 This function adjusts currency values for inflation so values are reflective of monetary value for a given year. 
 
@@ -27,7 +27,7 @@ code blocks for commands
 
 ## Per Capita Calculations: XXXX
 
-### Description: 
+### Description
 
 This function adjusts numeric values to per-capita values based on an associated country name.  
 
@@ -44,7 +44,7 @@ code blocks for commands
 
 ## International Currency Exchange: XXXX 
 
-### Description: 
+### Description
 
 This function calculates the exchange value of currency for a given country of origin and given country for calculation. 
 
