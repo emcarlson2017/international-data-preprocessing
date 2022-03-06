@@ -6,8 +6,6 @@ An overview of all functionality included in the International Data Preprocessin
 
 Review the documentation below to ensure the input data frame matches the requirements for each function. 
 
-# Package Functions
-
 ## Inflation Adjustments: XXXXX
 
 ### Description
