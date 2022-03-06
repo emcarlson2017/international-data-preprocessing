@@ -21,6 +21,8 @@ This function adjusts currency values for inflation so values are reflective of 
 * in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
 * new_col_name: Name of new column if in_place = TRUE 
 
+### Implementation 
+
 ```
 code blocks for commands
 ```
@@ -38,6 +40,8 @@ This function adjusts numeric values to per-capita values based on an associated
 * in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
 * new_col_name: Name of new column if in_place = TRUE 
 
+### Implementation 
+
 ```
 code blocks for commands
 ```
@@ -54,6 +58,8 @@ This function calculates the exchange value of currency for a given country of o
 * countries: Single value or list of values that determine the exchange calculation 
 * in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
 * new_col_name: Name of new column if in_place = TRUE 
+
+### Implementation 
 
 ```
 code blocks for commands
