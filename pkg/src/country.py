@@ -3,6 +3,7 @@ import pandas as pd
 
 _countries = pd.read_csv('../data/countries.csv')
 
+
 class Country:
 	"""docstring for Country"""
 	def __init__(self, alpha2_code, alpha3_code=None, un_code=None, full_name=None, short_name=None):
@@ -12,13 +13,27 @@ class Country:
 		self.full_name = full_name
 		self.short_name = short_name
 
+	def get(self, attr):
+		if attr == 'alpha2':
+			return self.alpha2_code
+		elif attr == 'alpha3':
+			return self.alpha3_code
+		elif attr == 'UN':
+			return self.un_code
+		elif attr == 'full':
+			return self.full_name
+		elif attr == 'short':
+			return self.short_name
+		else:
+			raise ValueError("attr must be one of the following: alpha2, alpha3, UN, full, short")
+
 	@staticmethod
 	def _check_valid(row, msg):
-		if _countries.shape[0] < 1:
+		if row.shape[0] < 1:
 			raise ValueError(msg)
 		# unlikely to happen unless someone tampered with /data
-		if _countries.shape[0] > 1:
-			raise RuntimeError('Module data has been corrupted')
+		if row.shape[0] > 1:
+			raise RuntimeError("Module data has been corrupted")
 
 	@staticmethod
 	def _row_to_country(row):
@@ -49,4 +64,18 @@ class Country:
 			return Country._row_to_country(row)
 
 
-		
+def parse_countries(df, input_col_name, output_types=['alpha2'], output_col_names=None, in_place=True):
+	if len(output_types) == 0:
+		raise ValueError("output_types must contain one or more of the following: alpha2, alpha3, UN, full, short")
+	
+	new_col = df[input_col_name].map(Country.parse)
+
+	if in_place:
+		if len(output_types) > 1:
+			raise ValueError("Cannot create multiple columns in place, len(output_types) must be 1.")
+		df[input_col_name] = new_col.map(lambda x : x.get(output_types[0]))
+	else:
+		if len(output_types) != len(output_col_names):
+			raise ValueError("output_types and output_col_names must be of the same length")
+		for i in range(len(output_types)):
+			df[output_col_names[i]] = new_col.map(lambda x : x.get(output_types[i]))
