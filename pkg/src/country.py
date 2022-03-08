@@ -1,7 +1,8 @@
+from _util import check_single_row
 import re
 import pandas as pd
 
-_countries = pd.read_csv('../data/countries.csv')
+_countries = pd.read_csv('data/countries.csv')
 
 
 class Country:
@@ -28,14 +29,6 @@ class Country:
 			raise ValueError("attr must be one of the following: alpha2, alpha3, UN, full, short")
 
 	@staticmethod
-	def _check_valid(row, msg):
-		if row.shape[0] < 1:
-			raise ValueError(msg)
-		# unlikely to happen unless someone tampered with /data
-		if row.shape[0] > 1:
-			raise RuntimeError("Module data has been corrupted")
-
-	@staticmethod
 	def _row_to_country(row):
 		# even though we know that we will get a single row,
 		# pandas returns a dataframe when indexing by condition
@@ -48,19 +41,19 @@ class Country:
 
 		if re.fullmatch('[a-zA-Z]{2}', input):
 			row = _countries[_countries['alpha2_code'] == input]
-			Country._check_valid(row, "Two letter input must be a valid Alpha 2 country code.")
+			check_single_row(row, "Two letter input must be a valid Alpha 2 country code.")
 			return Country._row_to_country(row)
 		elif re.fullmatch('[a-zA-Z]{3}', input):
 			row = _countries[_countries['alpha3_code'] == input]
-			Country._check_valid(row, "Three letter input must be a valid Alpha 3 country code.")
+			check_single_row(row, "Three letter input must be a valid Alpha 3 country code.")
 			return Country._row_to_country(row)
 		elif re.fullmatch('\\d{2}', input):
 			row = _countries[_countries['alpha2_code'] == input]
-			Country._check_valid(row, "Three digit input must be a valid UN country code.")
+			check_single_row(row, "Three digit input must be a valid UN country code.")
 			return Country._row_to_country(row)
 		else:
 			row = _countries[_countries['full_name'] == input | _countries['short_name'] == input]
-			Country._check_valid(row, '''Please provide 2 letter Alpha 2 code, or 3 letter Alpha 3 code, or 3 digit UN code or the official or shortened name of a country from https://www.un.int/protocol/sites/www.un.int/files/Protocol%20and%20Liaison%20Service/officialnamesofcountries.pdf''')
+			check_single_row(row, '''Please provide 2 letter Alpha 2 code, or 3 letter Alpha 3 code, or 3 digit UN code or the official or shortened name of a country from https://www.un.int/protocol/sites/www.un.int/files/Protocol%20and%20Liaison%20Service/officialnamesofcountries.pdf''')
 			return Country._row_to_country(row)
 
 

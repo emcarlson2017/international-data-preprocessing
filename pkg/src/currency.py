@@ -1,7 +1,7 @@
 import country
 
-_country_to_currency = pd.read_csv("../data/country_currency.csv")
-_currencies = pd.read_csv("../data/currencies.csv")
+_country_to_currency = pd.read_csv('data/country_currency.csv')
+_currencies = pd.read_csv('data/currencies.csv')
 
 _country_to_currency_dict = {}
 for row in _country_to_currency.itertuples():
@@ -24,14 +24,6 @@ class Money:
 			raise ValueError("attr must be one of the following: amount, currency_abbv, currency_full")
 
 	@staticmethod
-	def _check_valid(row, msg):
-		if row.shape[0] < 1:
-			raise ValueError(msg)
-		# unlikely to happen unless someone tampered with /data
-		if row.shape[0] > 1:
-			raise RuntimeError("Module data has been corrupted")
-
-	@staticmethod
 	def parse(input, currency=None):
 		input = str(input).strip()
 
@@ -39,7 +31,7 @@ class Money:
 			if not re.fullmatch('[0-9]+\\.?[0-9]*', input):
 				raise ValueError("Input must be a number or a number in string representation when currency is specified.")
 			row = _currencies[_currencies['abbreviation'] == currency | _currencies['full_name'] == currency]
-			Currency._check_valid(row, '''Currency provided must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
+			check_single_row(row, '''Currency provided must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
 			return Currency(float(input), row.iloc[0]['abbreviation'], row.iloc[0]['full_name'])
 
 		amount = None
@@ -56,7 +48,7 @@ class Money:
 				raise ValueError("Input must be of the form <amount currency> or <currency amount> if currency is not provided.")
 		
 		row = _currencies[_currencies['abbreviation'] == currency | _currencies['full_name'] == currency]
-		Currency._check_valid(row, '''Currency must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
+		check_single_row(row, '''Currency must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
 		return Currency(float(input), row.iloc[0]['abbreviation'], row.iloc[0]['full_name'])
 
 
