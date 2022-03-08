@@ -8,9 +8,9 @@ _population = pd.read_csv(os.path.join(dirpath, 'data/population.csv'))
 _forex = pd.read_csv(os.path.join(dirpath, 'data/forex.csv'))
 
 def _adjust_for_inflation_single(amount, country, year_from, year_to):
-	row_from = _inflation[_inflation['year'] == year_from]
+	row_from = _inflation[(_inflation['country'] == country) & (_inflation['year'] == year_from)]
 	check_single_row(row_from, str(year_from) + " is not a supported year for inflation in " + country)
-	row_to = _inflation[_inflation['year'] == year_to]
+	row_to = _inflation[(_inflation['country'] == country) & (_inflation['year'] == year_to)]
 	check_single_row(row_from, str(year_to) + " is not a supported year for inflation in " + country)
 
 	index_from = row_from.iloc[0]['index']
@@ -47,6 +47,8 @@ def adjust_per_capita(df, amount_col, country_col, year_col, in_place=True, new_
 
 
 def _convert_currency_single(amount, currency_from, currency_to, year):
+	if currency_from == currency_to:
+		return amount
 	row = _forex[(_forex['from'] == currency_from) & (_forex['to'] == currency_to) & (_forex['year'] == year)]
 	check_single_row(row, "Forex data for " + currency_from + " and " + currency_to + " in " + str(year) + " is unavailable")
 	return amount * row.iloc[0]['rate']
