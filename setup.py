@@ -10,4 +10,6 @@ setup(
    install_requires=['pandas'],
    license='MIT',
    url='https://github.com/emcarlson2017/international-data-preprocessing',
+   package_data={'international_data_preprocessing' : ['international_data_preprocessing/data/*.csv']},
+   include_package_data=True,
 )

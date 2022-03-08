@@ -1,8 +1,10 @@
-from _util import check_single_row
+from ._util import check_single_row
 import re
+import os, os.path
 import pandas as pd
 
-_countries = pd.read_csv('data/countries.csv')
+dirpath = os.path.dirname(os.path.realpath(__file__))
+_countries = pd.read_csv(os.path.join(dirpath, 'data/countries.csv'))
 
 
 class Country:

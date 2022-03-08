@@ -1,8 +1,11 @@
-from country import Country
+from .country import Country
+from ._util import check_single_row
 import pandas as pd
+import os, os.path
 
-_country_to_currency = pd.read_csv('data/country_currency.csv')
-_currencies = pd.read_csv('data/currencies.csv')
+dirpath = os.path.dirname(os.path.realpath(__file__))
+_country_to_currency = pd.read_csv(os.path.join(dirpath, 'data/country_currency.csv'))
+_currencies = pd.read_csv(os.path.join(dirpath, 'data/currencies.csv'))
 
 _country_to_currency_dict = {}
 for row in _country_to_currency.itertuples():
