@@ -52,7 +52,7 @@ class Country:
 			check_single_row(row, "Three digit input must be a valid UN country code.")
 			return Country._row_to_country(row)
 		else:
-			row = _countries[_countries['full_name'] == input | _countries['short_name'] == input]
+			row = _countries[(_countries['full_name'] == input) | (_countries['short_name'] == input)]
 			check_single_row(row, '''Please provide 2 letter Alpha 2 code, or 3 letter Alpha 3 code, or 3 digit UN code or the official or shortened name of a country from https://www.un.int/protocol/sites/www.un.int/files/Protocol%20and%20Liaison%20Service/officialnamesofcountries.pdf''')
 			return Country._row_to_country(row)
 

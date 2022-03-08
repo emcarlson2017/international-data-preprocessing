@@ -1,4 +1,5 @@
-import country
+from country import Country
+import pandas as pd
 
 _country_to_currency = pd.read_csv('data/country_currency.csv')
 _currencies = pd.read_csv('data/currencies.csv')
@@ -30,7 +31,7 @@ class Money:
 		if currency:
 			if not re.fullmatch('[0-9]+\\.?[0-9]*', input):
 				raise ValueError("Input must be a number or a number in string representation when currency is specified.")
-			row = _currencies[_currencies['abbreviation'] == currency | _currencies['full_name'] == currency]
+			row = _currencies[(_currencies['abbreviation'] == currency) | (_currencies['full_name'] == currency)]
 			check_single_row(row, '''Currency provided must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
 			return Currency(float(input), row.iloc[0]['abbreviation'], row.iloc[0]['full_name'])
 
@@ -47,18 +48,18 @@ class Money:
 			else:
 				raise ValueError("Input must be of the form <amount currency> or <currency amount> if currency is not provided.")
 		
-		row = _currencies[_currencies['abbreviation'] == currency | _currencies['full_name'] == currency]
+		row = _currencies[(_currencies['abbreviation'] == currency) | (_currencies['full_name'] == currency)]
 		check_single_row(row, '''Currency must be a valid 3 letter abbreviation from https://www.ifcmarkets.com/en/about-forex/currencies-and-abbreviations''')
 		return Currency(float(input), row.iloc[0]['abbreviation'], row.iloc[0]['full_name'])
 
 
 def country_to_primary_currency(df, country_col_name, output_col_name=None, in_place=True):
-	new_col = df[country_col_name].map(Country.parse).map(lambda x : _country_to_currency_dict[x.get('alpha2')])
+	new_col = df[country_col_name].map(Country.parse).map(lambda x : _country_to_currency_dict[x.get('alpha3')])
 
 	if in_place:
 		df[country_col_name] = new_col
 	else:
-		if not output_col_names:
+		if not output_col_name:
 			raise ValueError("output_col_name must be provided when operation is not in place.")
 		df[output_col_name] = new_col
 

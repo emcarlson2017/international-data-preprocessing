@@ -1,4 +1,4 @@
-import currency
+import pandas as pd
 
 _inflation = pd.read_csv('data/inflation.csv')
 _population = pd.read_csv('data/population.csv')
@@ -27,7 +27,7 @@ def adjust_for_inflation(df, amount_col, country_col, year_from_col, year_to_col
 
 
 def _adjust_per_capita_single(amount, country, year):
-	row = _population[_population['country'] == country & _population['year'] == year]
+	row = _population[(_population['country'] == country) & (_population['year'] == year)]
 	check_single_row(row, "Population data for " + country + " in " + str(year) + " is unavailable")
 	return amount / row.iloc[0]['population']
 
@@ -44,7 +44,7 @@ def adjust_per_capita(df, amount_col, country_col, year_col, in_place=True, new_
 
 
 def _convert_currency_single(amount, currency_from, currency_to, year):
-	row = _forex[_forex['from'] == currency_from & _forex['to'] == currency_to & _forex['year'] == year]
+	row = _forex[(_forex['from'] == currency_from) & (_forex['to'] == currency_to) & (_forex['year'] == year)]
 	check_single_row(row, "Population data for " + country + " in " + str(year) + " is unavailable")
 	return amount * row.iloc[0]['rate']
 
