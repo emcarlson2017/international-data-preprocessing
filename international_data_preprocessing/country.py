@@ -49,6 +49,7 @@ class Country:
 
 	@staticmethod
 	def _row_to_country(row):
+		"""Transform pandas data frame to column value""" 
 		# even though we know that we will get a single row,
 		# pandas returns a dataframe when indexing by condition
 		row = row.iloc[0]
@@ -56,7 +57,7 @@ class Country:
 
 	@staticmethod
 	def parse(input):
-		"""Parse standard country input into expected alpha 3 codes for function input
+		"""Identify country based on standard input, ensure input is valid 
 
 		Keyword arguments:
 		input -- country identifier of type alpha 2, alpha 3, shortened name, or full name
