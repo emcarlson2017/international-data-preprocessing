@@ -1,65 +1,60 @@
 # Functionality
 
-An overview of all functionality included in the International Data Preprocessing Python package. 
+An overview of all preprocessing functionality included in the International Data Preprocessing Python package. 
 
 ## Standard Input 
 
-Review the documentation below to ensure the input data frame matches the requirements for each function. 
+Review the documentation below to ensure the input column types match the requirements for each function. 
 
-## Inflation Adjustments: XXXXX
-
-### Description
-
-This function adjusts currency values for inflation so values are reflective of monetary value for a given year. 
-
-### Arguments
-
-* col_name: Name of the column the inflation adjustment will be excuted on
-* year_adjusted: The year to which currency values will be adjusted to 
-* in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
-* new_col_name: Name of new column if in_place = TRUE 
-
-### Implementation 
-
-```
-code blocks for commands
-```
-
-## Per Capita Calculations: XXXX
+## Inflation Adjustments: adjust_for_inflation
 
 ### Description
 
-This function adjusts numeric values to per-capita values based on an associated country name.  
+This function adjusts numeric monetary values for inflation based on year and country values. 
 
 ### Arguments
 
-* col_name: Name of the column the per capita calculation will be executed on 
-* country_col_name: Name of column providing country names in data frame 
-* in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
-* new_col_name: Name of new column if in_place = TRUE 
+* df: data frame 
+* amount_col: numeric monetary value column to be adjusted
+* country_col: country column associated with currency values (must be in alpha 3 code format)
+* year_from_col: year column of original currency values 
+* year_to_col: year column of resulting currency values 
+* in_place: if True, overwrite previous column; if False, add a new column of resulting values
 
-### Implementation 
+For implementation, see Example 2 in the examples file. 
 
-```
-code blocks for commands
-```
-
-## International Currency Exchange: XXXX 
+## Per Capita Calculations: adjust_per_capita
 
 ### Description
 
-This function calculates the exchange value of currency for a given country of origin and given country for calculation. 
+This function adjusts numeric values to per-capita values based on an associated country and year.  
 
 ### Arguments
 
-* col_name: Name of the column the per capita calculation will be executed on 
-* countries: Single value or list of values that determine the exchange calculation 
-* in_place: Boolean value to determine if calculation will replace existing column (TRUE) or create a new column (FALSE)
-* new_col_name: Name of new column if in_place = TRUE 
+* df: data frame
+* amount_col: numeric value column for per capita adjustment 
+* country_col: country column associated with numeric value column (must be in alpha 3 code format)
+* year_col: year column associated with numeric value column 
+* in_place: if True, overwrite previous column; if False, add a new column of resulting values
+* new_col_name: new column name of resulting values if in_place is False
 
-### Implementation 
+For function implementation, see Example 1 in the examples folder. 
 
-```
-code blocks for commands
-```
+## International Currency Exchange: convert_currency 
+
+### Description
+
+This function calculates the exchange value from one currency to another. 
+
+### Arguments
+
+* df: data frame
+* amount_col: column of monetary values
+* country_from_col: original currency column associated with amount column (must be in standard 3 letter currency codes)
+* country_to_col: resulting currency type column of exchanged amount column (must be in standard 3 letter currency codes)
+* year_col: year column of measured amount 
+* in_place: if True, overwrite previous column; if False, add a new column of resulting values
+* new_col_name: new column name of resulting values if in_place is False
+
+For function implementation, see Example 3 in the examples folder. 
 
