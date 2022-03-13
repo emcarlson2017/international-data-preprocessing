@@ -12,12 +12,21 @@ for row in _country_to_currency.itertuples():
 	_country_to_currency_dict[row.country] = row.currency
 
 class Money:
+    """The Money class contains all functions to retrieve, and parse currency values"""
+    
 	def __init__(self, amount, currency_abbv, currency_full=None):
+        """Initialize Money class"""
 		self.amount = amount
 		self.currency_abbv = currency_abbv
 		self.currency_full = currency_full
 
 	def get(self, attr):
+        """Retrieve attribute from an instance of the Money class 
+        
+        Keyword arguments: 
+        self -- instance of Money class 
+        attr -- name of attribute to retrieve (amount, abbv, full)
+        """
 		if attr == 'amount':
 			return self.amount
 		elif attr == 'abbv':
@@ -57,6 +66,14 @@ class Money:
 
 
 def country_to_primary_currency(df, country_col_name, output_col_name=None, in_place=True):
+    """Parse alpha 3 country code to primary currency code of that country
+    
+    Keyword arguments: 
+    df -- data frame 
+    country_col_name -- alpha 3 country identifier code 
+    output_col_name -- new column name if in_place is True 
+    in_place -- if True, overwrite output to existing column. if False, write output to new column 
+    """
 	new_col = df[country_col_name].map(Country.parse).map(lambda x : _country_to_currency_dict[x.get('alpha3')])
 
 	if in_place:
