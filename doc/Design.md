@@ -1,6 +1,6 @@
 # Design 
 
-An overview of the design decisions made during the creation of this Python Package. 
+An overview of the design decisions made during the creation of this Internation Data Preprocessing Python Package. 
 
 ## Data Input
 
