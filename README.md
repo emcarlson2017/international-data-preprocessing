@@ -27,6 +27,10 @@ The program can be executed using the following general steps:
 
 Examples detailing how to execute the program according to these steps is shown in the Examples folder. An example of each function execution and parsing of input data is shown. 
 
+## Use Cases 
+
+This package is ideal for any individual looking for a lightweight solution to conducting data cleaning or preprocessing. This package focuses on preprocessing and cleaning international data, with functions that complete some of the most helpful calculations and adjustments used to normalize this type of data. Users may be students, professionals, academics, etc. This package is designed to be accessible and usable for any individuals in need of a preprocessing tool. Project use cases might include dataframes involving global census data or international finance comparisons. These use cases would benefit from normalized column adjustments or a unified perspective achieved through data preprocessing with this package. 
+
 ## Help
 
 For questions or concerns, reference the contact information below, or further explore the project and functionality documentation. 
