@@ -14,7 +14,7 @@ In order to utilize this package, follow the installation instructions below. On
 
 * ######################################################
 
-### Executing program
+### Program Execution
 
 The program can be executed using the following general steps: 
 
@@ -49,7 +49,7 @@ In January 2023, the international data preprocessing package will receive an up
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE.md file for details
+This project is licensed under the MIT License. See the LICENSE.md file for details.
 
 ## Acknowledgments
 
