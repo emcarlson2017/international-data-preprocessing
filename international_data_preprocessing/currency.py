@@ -12,21 +12,32 @@ for row in _country_to_currency.itertuples():
 	_country_to_currency_dict[row.country] = row.currency
 
 class Money:
-    	"""The Money class contains all functions to retrieve, and parse currency values"""
+    """The Money class contains all functions to parse and retrieve money values in any currency."""
     
 	def __init__(self, amount, currency_abbv, currency_full=None):
-        	"""Initialize Money class"""
+        """Initialize Money instance.
+		
+		Args:
+			amount: the numeric amount of money, regardless of currency.
+			currency_abbv: the 3 letter abbreviation of the currency.
+			currency_full: optional, the full name of the currency.
+        """
 		self.amount = amount
 		self.currency_abbv = currency_abbv
 		self.currency_full = currency_full
 
 	def get(self, attr):
-        	"""Retrieve attribute from an instance of the Money class 
+        """Retrieve attribute from an instance of the Money class.
         
-        	Keyword arguments: 
-        	self -- instance of Money class 
-        	attr -- name of attribute to retrieve (amount, abbv, full)
-        	"""
+        Args: 
+        	attr: name of attribute to retrieve, one of (amount, abbv, full).
+
+        Returns:
+        	the value of the requested attribute.
+
+        Raises:
+        	ValueError: if the input is not one of the 3 attributes.
+        """
 		if attr == 'amount':
 			return self.amount
 		elif attr == 'abbv':
@@ -38,6 +49,18 @@ class Money:
 
 	@staticmethod
 	def parse(input, currency=None):
+		"""Parses money value strings into Money objects.
+    
+    	Args: 
+    		input: string containing the money value in <amount currency> or <currency amount> format, or <amount> format if currency is provided separately.
+    		currency: optional, string containing the currency code or full currency name.
+
+    	Returns:
+    		the Currency object.
+
+    	Raises:
+    		ValueError: if the input is not in the format specified above.
+    	"""
 		input = str(input).strip()
 
 		if currency:
@@ -66,14 +89,15 @@ class Money:
 
 
 def country_to_primary_currency(df, country_col_name, output_col_name=None, in_place=True):
-    	"""Parse alpha 3 country code to primary currency code of that country
+    """Provides currency code given a country in any standard notation .
+    For countries with more than one currency, the primary or most commonly used one is selected.
     
-    	Keyword arguments: 
-    	df -- data frame 
-    	country_col_name -- alpha 3 country identifier code 
-    	output_col_name -- new column name if in_place is True 
-    	in_place -- if True, overwrite output to existing column. if False, write output to new column 
-    	"""
+    Args: 
+    	df: the data frame.
+    	country_col_name: the name of the column with country in alpha2, alpha3, UN, full, or short format.
+    	output_col_name: new column name if in_place is False.
+    	in_place: if True, overwrite output to input column; if False, write output to new column.
+    """
 	new_col = df[country_col_name].map(Country.parse).map(lambda x : _country_to_currency_dict[x.get('alpha3')])
 
 	if in_place:
@@ -85,6 +109,15 @@ def country_to_primary_currency(df, country_col_name, output_col_name=None, in_p
 
 
 def parse_currencies(df, input_col_name, output_types=None, output_col_names=None, in_place=True):
+	"""Parses and separates money values (e.g. EUR 52.50) into its amount and/or currency.
+    
+    Args: 
+    	df: the data frame.
+    	input_col_name: the name of the column with money values.
+    	output_types: one or more of ['amount', 'abbv', 'full'].
+    	output_col_names: new column names if in_place is False.
+    	in_place: if True, overwrite output to input column; if False, write output to new column.
+    """
 	new_col = df[input_col_name].map(Currency.parse)
 
 	if in_place:

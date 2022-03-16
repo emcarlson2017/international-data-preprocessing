@@ -8,19 +8,20 @@ _countries = pd.read_csv(os.path.join(dirpath, 'data/countries.csv'))
 
 
 class Country:
-	"""The Country class contains all related identifying codes and names for a given country. 
-    	This class also contains functions needed to retrieve these names and codes and
-    	parse these identifiers for a single instance or column. 
+	"""The Country class contains all related identifying codes and names for a given country.
     
-   	 Parameters: 
-    	alpha2_code -- official two letter identifying country code 
-    	alpha3_code -- official three letter identifying country code
-    	un_code -- official 3 digit country code assigned by the United Nations 
-    	full_name -- full official name of country 
-    	short_name -- shortened official name of country 
-    	"""
+   	
+    """
 	def __init__(self, alpha2_code, alpha3_code=None, un_code=None, full_name=None, short_name=None):
-    		"""Initialize country class"""
+    	"""Initialize country instance.
+
+		Args: 
+    		alpha2_code: official two letter identifying country code.
+    		alpha3_code: official three letter identifying country code.
+    		un_code: official 3 digit country code assigned by the United Nations.
+    		full_name: full official name of country.
+    		short_name: shortened official name of country.
+    	"""
 		self.alpha2_code = alpha2_code
 		self.alpha3_code = alpha3_code
 		self.un_code = un_code
@@ -28,12 +29,17 @@ class Country:
 		self.short_name = short_name
 
 	def get(self, attr):
-   		"""Get an attribute of country class 
+		"""Retrieve attribute from an instance of the Country class.
+        
+        Args: 
+        	attr: name of attribute to retrieve, one of (alpha2, alpha3, UN, full, short).
 
-   		 Keyword arguments:
-		 self -- instance of country class
-		 attr -- specify country identifier type to retrieve 
-		 """    
+        Returns:
+        	the value of the requested attribute.
+
+        Raises:
+        	ValueError: if the input is not one of the 5 attributes.
+        """ 
 		if attr == 'alpha2':
 			return self.alpha2_code
 		elif attr == 'alpha3':
@@ -49,7 +55,6 @@ class Country:
 
 	@staticmethod
 	def _row_to_country(row):
-		"""Transform pandas data frame to column value""" 
 		# even though we know that we will get a single row,
 		# pandas returns a dataframe when indexing by condition
 		row = row.iloc[0]
@@ -57,10 +62,17 @@ class Country:
 
 	@staticmethod
 	def parse(input):
-		"""Identify country based on standard input, ensure input is valid 
+		"""Parses country string into a Country object.
+		This method will automatically fill out the other 4 attributes based on any 1 attribute.
 
-		Keyword arguments:
-		input -- country identifier of type alpha 2, alpha 3, shortened name, or full name
+		Args:
+			input: country string of type alpha2, alpha3, UN code, short name, or full name.
+
+		Returns:
+			the Country object.
+
+		Raises:
+			ValueError: if the input is not in one of the 5 formats.
 		"""
 		input = input.strip()
 
@@ -83,15 +95,18 @@ class Country:
 
 
 def parse_countries(df, input_col_name, output_types=['alpha2'], output_col_names=None, in_place=True):
-	 """Parse country column input to specified identifer type 
+	"""Parses the input from any valid country representation and outputs in the desired format.
 
-	 Keyword arguments:
-	 df -- data frame
-	 input_col_name -- name of column containing original country identifiers of type alpha 2, alpha 3, shortened name, or full name
-	 output_types -- country identifer type(s) of desired output 
-	 output_col_names -- name of new column(s) if in_place is True 
-	 in_place -- if True, overwrite output to same column(s). If False, write output to new column(s) 
-	 """
+	Args:
+		df: the data frame.
+		input_col_name: the name of column with country strings.
+		output_types: one or more of ['alpha2', 'alpha3', 'UN', 'full', 'short'], 'alpha2' by default.
+		output_col_names: name(s) of new column(s) if in_place is False. 
+		in_place: if True, overwrite output to same column; if False, write output to new column(s).
+
+	Raises:
+		ValueError: if the input column cannot be parsed, or if the requested output type is not one of 5 accepted values.
+	"""
 	if len(output_types) == 0:
 		raise ValueError("output_types must contain one or more of the following: alpha2, alpha3, UN, full, short")
 	

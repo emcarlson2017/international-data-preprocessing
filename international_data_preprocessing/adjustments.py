@@ -8,14 +8,6 @@ _population = pd.read_csv(os.path.join(dirpath, 'data/population.csv'))
 _forex = pd.read_csv(os.path.join(dirpath, 'data/forex.csv'))
 
 def _adjust_for_inflation_single(amount, country, year_from, year_to):
-    	"""Adjust a single numeric value for inflation.
-
-	 Keyword arguments:
-	 amount -- numeric value for inflation calculation
-	 country -- country associated with numeric currency value (alpha 3 code)
-	 year_from -- year of current currency value 
-	 year_to -- year of currency value after adjustment
-	 """
 	row_from = _inflation[(_inflation['country'] == country) & (_inflation['year'] == year_from)]
 	check_single_row(row_from, str(year_from) + " is not a supported year for inflation in " + country)
 	row_to = _inflation[(_inflation['country'] == country) & (_inflation['year'] == year_to)]
@@ -27,17 +19,20 @@ def _adjust_for_inflation_single(amount, country, year_from, year_to):
 	return amount * index_to / index_from
 
 def adjust_for_inflation(df, amount_col, country_col, year_from_col, year_to_col, in_place=True, new_col_name=None):
-	 """Adjust a column of numeric values for inflation.
+	"""Adjust monetary values for inflation.
 
-	 Keyword arguments:
-	 df -- data frame 
-	 amount_col -- numeric value column
-	 country_col -- country column associated with currency values (alpha 3 code)
-	 year_from_col -- year column of original currency values 
-	 year_to_col -- year column of resulting currency values 
-	 in_place -- if True, overwrite previous column. if False, add a new column of resulting values
-	 new_col_name -- new column name of resulting values in in_place is False
-	 """
+	Args:
+		df: the data frame.
+		amount_col: the name of the column containing the numeric amount of money, regardless of currency; see Currency.parse.
+		country_col: the name of the column containing the name of the country in alpha3 code; see Country.parse.
+		year_from_col: the name of the column containing the year the input money values belong to.
+		year_to_col: the name of the column containing the year the resulting money values should belong to.
+		in_place: if True, overwrite input column; if False, add a new column of resulting values.
+		new_col_name: optional, the name of the new column of resulting values if in_place is False.
+
+	Raises:
+		ValueError: if new column name is not provided when in_place=False, or the provided years/country combination does not have inflation data.
+	"""
 	new_col = df.apply(lambda x : _adjust_for_inflation_single(x[amount_col], x[country_col], x[year_from_col], x[year_to_col]), axis=1)
 
 	if in_place:
@@ -49,29 +44,25 @@ def adjust_for_inflation(df, amount_col, country_col, year_from_col, year_to_col
 
 
 def _adjust_per_capita_single(amount, country, year):
-	 """Calculate per capita adjustment of a single numeric metric. 
-
-	 Keyword arguments:
-	 amount -- numeric value for per capita adjustment
-	 country -- country associated with numeric value 
-	 year -- year associated with numeric value 
-	 """
 	row = _population[(_population['country'] == country) & (_population['year'] == year)]
 	check_single_row(row, "Population data for " + country + " in " + str(year) + " is unavailable")
 	return amount / row.iloc[0]['population']
 
 
 def adjust_per_capita(df, amount_col, country_col, year_col, in_place=True, new_col_name=None):
-    	"""Conduct a per capita adjustment on a column of numeric values.
+	"""Adjust any metric to per-capita, given a country.
 
-    	Keyword arguments:
-    	df -- data frame
-    	amount_col -- numeric value column for per capita adjustment 
-    	country_col -- country column associated with numeric value column (alpha 3 code)
-    	year_col -- year column associated with numeric value column 
-    	in_place -- if True, overwrite previous column. if False, add a new column of resulting values
-    	new_col_name -- new column name of resulting values in in_place is False
-    	"""
+	Args:
+		df: the data frame.
+		amount_col: the name of the column containing the numeric amount to be adjusted.
+		country_col: the name of the column containing the name of the country in alpha3 code; see Country.parse.
+		year_col: the name of the column containing the year the metric is from; this will be used to determine population.
+		in_place: if True, overwrite input column; if False, add a new column of resulting values.
+		new_col_name: optional, the name of the new column of resulting values if in_place is False.
+
+	Raises:
+		ValueError: if new column name is not provided when in_place=False, or the provided year/country combination does not have population data.
+	"""
 	new_col = df.apply(lambda x : _adjust_per_capita_single(x[amount_col], x[country_col], x[year_col]), axis=1)
 
 	if in_place:
@@ -83,14 +74,6 @@ def adjust_per_capita(df, amount_col, country_col, year_col, in_place=True, new_
 
 
 def _convert_currency_single(amount, currency_from, currency_to, year):
-    	"""Exchange a currency value. 
-
-    	Keyword arguments:
-    	amount -- currency value
-    	country_from -- original currency associated with amount value (standard 3 letter currency code)
-    	country_to -- resulting currency of exchanged value (standard 3 letter currency code)
-    	year -- year associated with amount value
-    	"""
 	if currency_from == currency_to:
 		return amount
 	row = _forex[(_forex['from'] == currency_from) & (_forex['to'] == currency_to) & (_forex['year'] == year)]
@@ -98,17 +81,21 @@ def _convert_currency_single(amount, currency_from, currency_to, year):
 	return amount * row.iloc[0]['rate']
 
 def convert_currency(df, amount_col, currency_from_col, currency_to_col, year_col, in_place=True, new_col_name=None):
-     	"""Exchange a column of currency values. 
+	"""Convert monetary values from one currency to another.
+	The exchange rate used is the average exchange between the two countries for a given year.
 
-    	Keyword arguments:
-    	df -- data frame
-    	amount_col -- column of currency values
-    	country_from_col -- original currency column associated with amount column (standard 3 letter currency code)
-    	country_to_col -- resulting currency column of exchanged column (standard 3 letter currency code)
-    	year_col -- year column of measured amount column 
-    	in_place -- if True, overwrite previous column. if False, add a new column of resulting values
-    	new_col_name -- new column name of resulting values in in_place is False
-    	"""
+	Args:
+		df: the data frame.
+		amount_col: the name of the column containing the numeric amount of money, regardless of currency; see Currency.parse.
+		currency_from_col: the name of the column containing the 3 letter currency code of the given monetary value; see Currency.parse.
+		currency_to_col: the name of the column containing the 3 letter currency code the resulting money values should be in; see Currency.parse.
+		year_col: the name of the column containing the year to use for the exchange rate.
+		in_place: if True, overwrite input column; if False, add a new column of resulting values.
+		new_col_name: optional, the name of the new column of resulting values in in_place is False.
+
+	Raises:
+		ValueError: if new column name is not provided when in_place=False, or the provided year/currencies combination does not have forex data.
+	"""
 	new_col = df.apply(lambda x : _convert_currency_single(x[amount_col], x[currency_from_col], x[currency_to_col], x[year_col]), axis=1)
 
 	if in_place:
