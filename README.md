@@ -58,6 +58,6 @@ This project is licensed under the MIT License. See the LICENSE.md file for deta
 
 ## Acknowledgments
 
-* [readme-formatting] https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc
-* [country-identifiers] https://www.un.int/protocol/sites/www.un.int/files/Protocol%20and%20Liaison%20Service/officialnamesofcountries.pdf
-* [country-identifiers] https://www.nationsonline.org/oneworld/country_code_list.htm
+* [readme-formatting](https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc)
+* [country-identifiers](https://www.un.int/protocol/sites/www.un.int/files/Protocol%20and%20Liaison%20Service/officialnamesofcountries.pdf)
+* [country-identifiers](https://www.nationsonline.org/oneworld/country_code_list.htm)
