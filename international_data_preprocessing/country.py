@@ -22,11 +22,11 @@ class Country:
     	    full_name: full official name of country.
     	    short_name: shortened official name of country.
         """
-       self.alpha2_code = alpha2_code
-       self.alpha3_code = alpha3_code
-       self.un_code = un_code
-       self.full_name = full_name
-       self.short_name = short_name
+        self.alpha2_code = alpha2_code
+        self.alpha3_code = alpha3_code
+        self.un_code = un_code
+        self.full_name = full_name
+        self.short_name = short_name
 
     def get(self, attr):
         """Retrieve attribute from an instance of the Country class.

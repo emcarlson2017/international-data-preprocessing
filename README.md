@@ -12,7 +12,8 @@ In order to utilize this package, follow the installation instructions below. On
 
 ### Installation
 
-* ######################################################
+To install the package, clone the Github repo, `cd` into the root directory of the cloned repo, and run `pip install .`.
+Note that some versions of Python may not correctly copy over the `data/` directory, in which case you should manually copy it from the cloned repo to your Python environment library source. You may delete the cloned repo after that.
 
 ### Program Execution
 
@@ -47,7 +48,7 @@ Contact: emcar98@uw.edu
 
 ## Version History
 
-Coming in 2023: Version 2.0
+Coming in 2023: Version 1.1
 
 In January 2023, the international data preprocessing package will receive an update to its master data files in order to reflect the most relevant country populations, currency exchange rates, and inflation rates. This version will be the first of many updates in order to ensure that this package maintains its integrity and accuracy for every end user. 
 
