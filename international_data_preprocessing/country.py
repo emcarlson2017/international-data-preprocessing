@@ -15,12 +15,12 @@ class Country:
                  un_code=None, full_name=None, short_name=None):
         """Initialize country instance.
 
-	    Args:
-    	    alpha2_code: official two letter identifying country code.
-    	    alpha3_code: official three letter identifying country code.
-    	    un_code: official 3 digit country code assigned by the United Nations.
-    	    full_name: full official name of country.
-    	    short_name: shortened official name of country.
+        Args:
+            alpha2_code: official two letter identifying country code.
+            alpha3_code: official three letter identifying country code.
+            un_code: official 3 digit country code assigned by the United Nations.
+            full_name: full official name of country.
+            short_name: shortened official name of country.
         """
         self.alpha2_code = alpha2_code
         self.alpha3_code = alpha3_code
