@@ -124,9 +124,53 @@ Args:
 * output_col_names: new column names if in_place is False.
 * in_place: if True, overwrite output to input column; if False, write output to new column.
 
+## adjustments.py
 
+The adjustments module includes functions to preprocess data involving countries and currencies.
 
+### adjust_for_inflation
 
+Adjust monetary values for inflation.
 
+Args:
+* df: the data frame.
+* amount_col: the name of the column containing the numeric amount of money, regardless of currency; see Money.parse.
+* country_col: the name of the column containing the name of the country in alpha3 code; see Country.parse.
+* year_from_col: the name of the column containing the year the input money values belong to.
+* year_to_col: the name of the column containing the year the resulting money values should belong to.
+* in_place: if True, overwrite input column; if False, add a new column of resulting values.
+* new_col_name: optional, the name of the new column of resulting values if in_place is False.
 
+Raises:
+* ValueError: if new column name is not provided when in_place=False, or the provided years/country combination does not have inflation data.
 
+### adjust_per_capita
+
+Adjust any metric to per-capita, given a country.
+
+Args:
+* df: the data frame.
+* amount_col: the name of the column containing the numeric amount to be adjusted.
+* country_col: the name of the column containing the name of the country in alpha3 code; see Country.parse.
+* year_col: the name of the column containing the year the metric is from; this will be used to determine population.
+* in_place: if True, overwrite input column; if False, add a new column of resulting values.
+* new_col_name: optional, the name of the new column of resulting values if in_place is False.
+
+Raises:
+* ValueError: if new column name is not provided when in_place=False, or the provided year/country combination does not have population data.
+
+### convert_currency
+
+Convert monetary values from one currency to another. The exchange rate used is the average exchange between the two countries for a given year.
+
+Args:
+* df: the data frame.
+* amount_col: the name of the column containing the numeric amount of money, regardless of currency; see Money.parse.
+* currency_from_col: the name of the column containing the 3 letter currency code of the given monetary value; see Money.parse.
+* currency_to_col: the name of the column containing the 3 letter currency code the resulting money values should be in; see Money.parse.
+* year_col: the name of the column containing the year to use for the exchange rate.
+* in_place: if True, overwrite input column; if False, add a new column of resulting values.
+* new_col_name: optional, the name of the new column of resulting values in in_place is False.
+
+Raises:
+* ValueError: if new column name is not provided when in_place=False, or the provided year/currencies combination does not have forex data.
