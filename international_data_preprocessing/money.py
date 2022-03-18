@@ -105,7 +105,7 @@ class Money:
 
 def country_to_primary_currency(
         df, country_col_name, output_col_name=None, in_place=True):
-    """Provides currency code given a country in any standard notation .
+    """Provides currency code given a country in any standard notation.
     For countries with more than one currency, the primary or most commonly used one is selected.
 
     Args:
