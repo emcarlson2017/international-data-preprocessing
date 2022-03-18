@@ -1,3 +1,4 @@
+"""The adjustments module includes functions to preprocess data involving countries and currencies."""
 from ._util import check_single_row
 import pandas as pd
 import os

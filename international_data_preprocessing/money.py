@@ -1,3 +1,5 @@
+"""The money module includes an object representation of money,
+and functions to parse strings into Money."""
 from .country import Country
 from ._util import check_single_row
 import pandas as pd

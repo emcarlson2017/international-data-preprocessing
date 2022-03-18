@@ -1,3 +1,5 @@
+"""The country module includes an object representation of a country,
+and functions to parse strings into Countries."""
 from ._util import check_single_row
 import re
 import os
